@@ -10,8 +10,11 @@ public abstract class BaseState : IState
     {
     }
 
+    public virtual void FixedUpdate()
+    {
+    }
+
     public virtual void Exit()
     {
-            
     }
 }
