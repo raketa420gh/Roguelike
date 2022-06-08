@@ -10,5 +10,5 @@ public class CharacterMovement : MonoBehaviour, ICharacterMovement
         _controller = GetComponent<CharacterController>();
 
     public void Move(Vector3 direction) => 
-        _controller.Move(direction * Time.deltaTime);
+        _controller.Move(direction * Time.fixedDeltaTime);
 }

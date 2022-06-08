@@ -32,4 +32,12 @@ public class Factory : IFactory
         var hero = obj.GetComponent<Hero>();
         return hero;
     }
+
+    public Enemy CreateEnemy(Vector3 position, string path = AssetPath.Enemy, Transform parent = null)
+    {
+        GameObject obj = _assetProvider.Instantiate(path, position);
+        obj.transform.SetParent(parent);
+        var enemy = obj.GetComponent<Enemy>();
+        return enemy;
+    }
 }

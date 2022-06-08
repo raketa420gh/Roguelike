@@ -11,14 +11,9 @@ public class IdleState : BaseState
         _input = input;
     }
 
-    public override void Enter()
-    {
-        base.Enter();
-        Debug.Log("Idle state enter.");
-    }
-
     public override void Update()
     {
+        base.Update();
         if (_input.Axis != Vector2.zero)
             _hero.StateMachine.ChangeState(_hero.MoveState);
     }
