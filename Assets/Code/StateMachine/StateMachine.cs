@@ -2,12 +2,6 @@ public class StateMachine
 {
     public BaseState CurrentState { get; private set; }
 
-    private void Update() => 
-        CurrentState?.Update();
-
-    private void FixedUpdate() => 
-        CurrentState.FixedUpdate();
-
     public void ChangeState(BaseState newState)
     {
         CurrentState?.Exit();

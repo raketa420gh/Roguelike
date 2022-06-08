@@ -8,7 +8,9 @@ public class GameFactoryInstaller : MonoInstaller
     private void BindGameFactory()
     {
         Container
-            .Bind<Factory>()
-            .AsSingle();
+            .Bind<IFactory>()
+            .To<Factory>()
+            .AsSingle()
+            .NonLazy();
     }
 }

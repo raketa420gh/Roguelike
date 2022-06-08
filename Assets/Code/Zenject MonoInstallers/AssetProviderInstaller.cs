@@ -9,6 +9,7 @@ public class AssetProviderInstaller : MonoInstaller
     {
         Container
             .Bind<AssetProvider>()
-            .AsSingle();
+            .AsSingle()
+            .NonLazy();
     }
 }

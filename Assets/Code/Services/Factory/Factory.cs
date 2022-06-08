@@ -24,4 +24,12 @@ public class Factory : IFactory
         var audioSource = obj.GetComponentInChildren<AudioSource>();
         return audioSource;
     }
+
+    public Hero CreateHero(Vector3 position, string path = AssetPath.Hero, Transform parent = null)
+    {
+        GameObject obj = _assetProvider.Instantiate(path, position);
+        obj.transform.SetParent(parent);
+        var hero = obj.GetComponent<Hero>();
+        return hero;
+    }
 }
