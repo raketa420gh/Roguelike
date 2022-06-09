@@ -40,4 +40,12 @@ public class Factory : IFactory
         var enemy = obj.GetComponent<Enemy>();
         return enemy;
     }
+
+    public IProjectile CreateShell(Vector3 position, string path = AssetPath.Shell, Transform parent = null)
+    {
+        GameObject obj = _assetProvider.Instantiate(path, position);
+        obj.transform.SetParent(parent);
+        var projectile = obj.GetComponent<IProjectile>();
+        return projectile;
+    }
 }
