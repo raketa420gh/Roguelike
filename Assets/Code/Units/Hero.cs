@@ -11,17 +11,27 @@ public class Hero : Character
 
     [SerializeField] private Transform _body;
     private CharacterMovement _movement;
+    private IFirearms _firearms;
     private IInputService _input;
+    private IEnemyDetector _enemyDetector;
     
-    public CharacterMovement Movement => _movement;
     public Transform Body => _body;
+    public CharacterMovement Movement => _movement;
+    public IFirearms Firearms => _firearms;
+    public IEnemyDetector EnemyDetector => _enemyDetector;
 
     [Inject]
-    public void Construct(IInputService input) => 
+    public void Construct(IInputService input, IEnemyDetector enemyDetector)
+    {
         _input = input;
+        _enemyDetector = enemyDetector;
+    }
 
-    private void Awake() => 
+    private void Awake()
+    {
         _movement = GetComponent<CharacterMovement>();
+        _firearms = GetComponentInChildren<IFirearms>();
+    }
 
     private void Start()
     {

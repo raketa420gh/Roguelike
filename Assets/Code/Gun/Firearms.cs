@@ -8,18 +8,17 @@ public class Firearms : MonoBehaviour, IFirearms
 {
     [SerializeField] private Transform _muzzleTransform;
     private float _shootingSpeed = 0.5f;
-    private ITargetable _currentTarget;
     private IFactory _factory;
 
     [Inject]
     public void Construct(IFactory factory) => 
         _factory = factory;
 
-    public async Task StartShooting()
+    public async Task StartShooting(ITargetable target)
     {
-        while (_currentTarget != null)
+        while (true)
         {
-            Shoot(_currentTarget);
+            Shoot(target);
             await UniTask.Delay(TimeSpan.FromSeconds(_shootingSpeed));
         }
     }
@@ -28,5 +27,6 @@ public class Firearms : MonoBehaviour, IFirearms
     {
         IProjectile projectile = _factory.CreateShell(_muzzleTransform.position);
         projectile.SetDirection(target.GetDirectionRelativeTo(_muzzleTransform));
+        Debug.Log("SHOOT");
     }
 }

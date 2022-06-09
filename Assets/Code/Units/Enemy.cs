@@ -1,4 +1,7 @@
 using System;
+using UnityEngine;
+
+[RequireComponent(typeof(Targetable))]
 
 public class Enemy : Character
 {

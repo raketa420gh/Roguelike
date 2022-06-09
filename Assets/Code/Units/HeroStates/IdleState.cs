@@ -11,6 +11,18 @@ public class IdleState : BaseState
         _input = input;
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+        var enemy = _hero.EnemyDetector.GetClosestEnemy(_hero.transform);
+
+        if (enemy != null)
+        {
+            var target = enemy.GetComponent<ITargetable>();
+            _hero.Firearms.StartShooting(target);
+        }
+    }
+
     public override void Update()
     {
         base.Update();

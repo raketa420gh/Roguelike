@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
-public class EnemyDetector : MonoBehaviour
+
+public class EnemyDetector : MonoBehaviour, IEnemyDetector
 {
     public event Action<Enemy> OnEnemyDetected;
     public event Action<Enemy> OnEnemyUnobserved;
-    
+
     private readonly List<Enemy> _detectedEnemies = new List<Enemy>();
     private Enemy _closestEnemy;
 
@@ -54,6 +55,6 @@ public class EnemyDetector : MonoBehaviour
         return _closestEnemy;
     }
 
-    private void RemoveEnemyFromDetectedList(Enemy enemy) => 
+    private void RemoveEnemyFromDetectedList(Enemy enemy) =>
         _detectedEnemies.Remove(enemy);
 }
