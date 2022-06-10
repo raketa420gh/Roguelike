@@ -14,7 +14,7 @@ public class EnemyDetector : MonoBehaviour, IEnemyDetector
 
     private void OnTriggerEnter(Collider other)
     {
-        var enemy = other.GetComponent<Enemy>();
+        var enemy = other.GetComponentInParent<Enemy>();
 
         if (enemy)
         {

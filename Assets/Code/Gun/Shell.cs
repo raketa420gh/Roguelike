@@ -21,8 +21,8 @@ public class Shell : MonoBehaviour, IProjectile
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
-        InflictDamage();
+        //Destroy(gameObject);
+        //InflictDamage();
     }
     
     public void SetDirection(Vector3 direction) => 

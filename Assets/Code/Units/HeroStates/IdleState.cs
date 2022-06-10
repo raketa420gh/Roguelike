@@ -14,6 +14,7 @@ public class IdleState : BaseState
     public override void Enter()
     {
         base.Enter();
+        
         var enemy = _hero.EnemyDetector.GetClosestEnemy(_hero.transform);
 
         if (enemy != null)
@@ -28,5 +29,11 @@ public class IdleState : BaseState
         base.Update();
         if (_input.Axis != Vector2.zero)
             _hero.StateMachine.ChangeState(_hero.MoveState);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        _hero.Firearms.StopShooting();
     }
 }
