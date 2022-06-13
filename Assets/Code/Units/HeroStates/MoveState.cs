@@ -4,11 +4,13 @@ public class MoveState : BaseState
 {
     private Hero _hero;
     private IInputService _input;
+    private ICharacterMovement _movement;
 
-    public MoveState(StateMachine stateMachine, Hero hero, IInputService input)
+    public MoveState(StateMachine stateMachine, Hero hero, IInputService input, ICharacterMovement movement)
     {
         _hero = hero;
         _input = input;
+        _movement = movement;
     }
     
     public override void Update()
@@ -22,7 +24,7 @@ public class MoveState : BaseState
     {
         base.FixedUpdate();
         var moveVector = GetConvertedDirection(_input.Axis);
-        _hero.Movement.Move(moveVector);
+        _movement.Move(moveVector);
         LookAt(moveVector);
     }
 

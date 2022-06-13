@@ -1,7 +1,9 @@
+using Unity.Mathematics;
 using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(CharacterMovement))]
+[RequireComponent(typeof(EnemyDetector))]
 
 public class Hero : Character
 {
@@ -10,40 +12,22 @@ public class Hero : Character
     public MoveState MoveState;
 
     [SerializeField] private Transform _body;
-    private CharacterMovement _movement;
+    private ICharacterMovement _movement;
     private IFirearms _firearms;
     private IInputService _input;
     private IEnemyDetector _enemyDetector;
     
     public Transform Body => _body;
-    public CharacterMovement Movement => _movement;
-    public IFirearms Firearms => _firearms;
-    public IEnemyDetector EnemyDetector => _enemyDetector;
 
     [Inject]
-    public void Construct(IInputService input, IEnemyDetector enemyDetector)
-    {
+    public void Construct(IInputService input) => 
         _input = input;
-        _enemyDetector = enemyDetector;
-    }
 
     private void Awake()
     {
-        _movement = GetComponent<CharacterMovement>();
+        _movement = GetComponent<ICharacterMovement>();
         _firearms = GetComponentInChildren<IFirearms>();
-    }
-
-    private void Start()
-    {
-        InitializeStateMachine();
-    }
-
-    private void InitializeStateMachine()
-    {
-        StateMachine = new StateMachine();
-        IdleState = new IdleState(StateMachine, this, _input);
-        MoveState = new MoveState(StateMachine, this, _input);
-        StateMachine.ChangeState(IdleState);
+        _enemyDetector = GetComponent<IEnemyDetector>();
     }
 
     private void Update() => 
@@ -51,4 +35,18 @@ public class Hero : Character
 
     private void FixedUpdate() => 
         StateMachine.CurrentState.FixedUpdate();
+
+    public void InitializeStateMachine()
+    {
+        StateMachine = new StateMachine();
+        IdleState = new IdleState(StateMachine, this, _input, _movement, _firearms, _enemyDetector);
+        MoveState = new MoveState(StateMachine, this, _input, _movement);
+        StateMachine.ChangeState(IdleState);
+    }
+
+    public void LookAt(Transform target)
+    {
+        var direction = target.position - transform.position;
+        transform.LookAt(direction);
+    }
 }

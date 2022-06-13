@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IProjectile
 {
-    void SetDirection(Vector3 direction);
+    void SetTarget(Transform target);
 }

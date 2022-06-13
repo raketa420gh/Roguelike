@@ -32,6 +32,6 @@ public class Firearms : MonoBehaviour, IFirearms
     private void Shoot(ITargetable target)
     {
         IProjectile projectile = _factory.CreateShell(_muzzleTransform.position);
-        projectile.SetDirection(target.GetDirectionRelativeTo(_muzzleTransform));
+        projectile.SetTarget(target.GetTransform());
     }
 }

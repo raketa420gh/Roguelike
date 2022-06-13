@@ -9,7 +9,7 @@ public class EnemyDetector : MonoBehaviour, IEnemyDetector
     public event Action<Enemy> OnEnemyDetected;
     public event Action<Enemy> OnEnemyUnobserved;
 
-    private readonly List<Enemy> _detectedEnemies = new List<Enemy>();
+    private readonly List<Enemy> _detectedEnemies = new();
     private Enemy _closestEnemy;
 
     private void OnTriggerEnter(Collider other)
@@ -20,6 +20,7 @@ public class EnemyDetector : MonoBehaviour, IEnemyDetector
         {
             _detectedEnemies.Add(enemy);
             enemy.OnDead += RemoveEnemyFromDetectedList;
+            Debug.Log("On enemy detected");
             OnEnemyDetected?.Invoke(enemy);
         }
     }
