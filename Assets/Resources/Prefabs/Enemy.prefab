@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6555051645787415368}
   - component: {fileID: 3415537498748734131}
   - component: {fileID: 1706560853993015580}
-  - component: {fileID: 5897789766702883507}
+  - component: {fileID: 4211767314771995987}
+  - component: {fileID: 6891875576841925648}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -86,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c0df0651c4e4ab79c1337ae5717ccbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &5897789766702883507
+--- !u!54 &4211767314771995987
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,6 +103,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &6891875576841925648
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693003795328621084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.3222496
+  m_Height: 1.2775002
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &873735111011495168
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +130,6 @@ GameObject:
   - component: {fileID: 873735111011495172}
   - component: {fileID: 873735111011495171}
   - component: {fileID: 873735111011495170}
-  - component: {fileID: 873735111011495169}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -934,20 +948,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873735111011495168}
   m_Mesh: {fileID: 0}
---- !u!64 &873735111011495169
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873735111011495168}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1001 &9158635715240173298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -955,6 +955,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 924480094397175993}
     m_Modifications:
+    - target: {fileID: 7017250777140980526, guid: 3c899a09ab6a37b4e851d4b2712fc789, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7017250777140980526, guid: 3c899a09ab6a37b4e851d4b2712fc789, type: 3}
+      propertyPath: m_FillOrigin
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7993152903874965279, guid: 3c899a09ab6a37b4e851d4b2712fc789, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

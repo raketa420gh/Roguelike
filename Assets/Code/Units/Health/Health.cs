@@ -6,27 +6,29 @@ public class Health : MonoBehaviour
     public event Action<int> OnChanged;
     public event Action<float> OnPercentChanged = delegate {  }; 
     public event Action OnOver;
-    private int _current;
     private int _max = 100;
     
-    private void OnEnable() => 
-        Restore();
+    public int Current { get; private set; }
 
-    public void Setup(int maxHealth) => 
+    public void Setup(int maxHealth)
+    {
         _max = maxHealth;
+        Restore();
+        Debug.Log($"Current health of {name} = {Current}");
+    }
 
     public void ChangeHealth(int amount)
     {
-        _current = _current - amount;
+        Current += amount;
         OnChanged?.Invoke(amount);
 
-        float currentHealthPercent = (float) _current / (float) _max;
+        float currentHealthPercent = (float) Current / (float) _max;
         OnPercentChanged?.Invoke(currentHealthPercent);
 
-        if (_current <= 0)
+        if (Current <= 0)
             OnOver?.Invoke();
     }
 
     private void Restore() => 
-        _current = _max;
+        Current = _max;
 }

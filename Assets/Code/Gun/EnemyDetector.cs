@@ -20,7 +20,7 @@ public class EnemyDetector : MonoBehaviour, IEnemyDetector
         {
             _detectedEnemies.Add(enemy);
             enemy.OnDead += RemoveEnemyFromDetectedList;
-            Debug.Log("On enemy detected");
+            Debug.Log($"On enemy detected {enemy.name}");
             OnEnemyDetected?.Invoke(enemy);
         }
     }

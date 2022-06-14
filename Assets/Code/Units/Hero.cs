@@ -28,6 +28,10 @@ public class Hero : Character
         _movement = GetComponent<ICharacterMovement>();
         _firearms = GetComponentInChildren<IFirearms>();
         _enemyDetector = GetComponent<IEnemyDetector>();
+    }
+
+    private void Start()
+    {
         InitializeStateMachine();
     }
 

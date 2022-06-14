@@ -8,6 +8,7 @@ public class IdleState : BaseState
     private IInputService _input;
     private IEnemyDetector _enemyDetector;
     private Enemy _enemy;
+    private Coroutine _shootingRoutine;
 
     public IdleState(StateMachine stateMachine,
         Hero hero,
@@ -27,7 +28,7 @@ public class IdleState : BaseState
     {
         base.Enter();
         
-        _enemy = TryToFindEnemy();
+        _enemy = _enemyDetector.GetClosestEnemy(_hero.transform);
         
         if (_enemy != null)
         {
@@ -43,13 +44,4 @@ public class IdleState : BaseState
         if (_input.Axis != Vector2.zero)
             _hero.StateMachine.ChangeState(_hero.MoveState);
     }
-
-    public override void Exit()
-    {
-        base.Exit();
-        _firearms.StopShooting();
-    }
-
-    private Enemy TryToFindEnemy() =>
-        _enemyDetector.GetClosestEnemy(_hero.transform);
 }

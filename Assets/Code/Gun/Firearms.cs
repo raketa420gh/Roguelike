@@ -18,7 +18,7 @@ public class Firearms : MonoBehaviour, IFirearms
     public async Task StartShooting(ITargetable target)
     {
         _isShooting = true;
-        
+
         while (_isShooting)
         {
             Shoot(target);
@@ -26,12 +26,15 @@ public class Firearms : MonoBehaviour, IFirearms
         }
     }
 
-    public void StopShooting() => 
+    public void StopShooting()
+    {
         _isShooting = false;
+    }
 
     private void Shoot(ITargetable target)
     {
         IProjectile projectile = _factory.CreateShell(_muzzleTransform.position);
-        projectile.SetTarget(target.GetTransform());
+        var targetTransform = target.GetTransform();
+        projectile.SetTarget(targetTransform);
     }
 }
