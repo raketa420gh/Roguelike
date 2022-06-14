@@ -7,10 +7,7 @@ public class TestSpawner : MonoBehaviour
     private IFactory _factory;
     
     [Inject]
-    public void Construct(IFactory factory)
-    {
-        _factory = factory;
-    }
+    public void Construct(IFactory factory) => _factory = factory;
 
     private void Start()
     {
@@ -19,7 +16,6 @@ public class TestSpawner : MonoBehaviour
             
         var startCharacterPosition = new Vector3(0, 1, -5);
         var hero = _factory.CreateHero(startCharacterPosition);
-        hero.InitializeStateMachine();
     }
 
     private void Update()

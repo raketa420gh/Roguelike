@@ -1,4 +1,4 @@
-using Unity.Mathematics;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -28,6 +28,7 @@ public class Hero : Character
         _movement = GetComponent<ICharacterMovement>();
         _firearms = GetComponentInChildren<IFirearms>();
         _enemyDetector = GetComponent<IEnemyDetector>();
+        InitializeStateMachine();
     }
 
     private void Update() => 
@@ -36,17 +37,11 @@ public class Hero : Character
     private void FixedUpdate() => 
         StateMachine.CurrentState.FixedUpdate();
 
-    public void InitializeStateMachine()
+    private void InitializeStateMachine()
     {
         StateMachine = new StateMachine();
         IdleState = new IdleState(StateMachine, this, _input, _movement, _firearms, _enemyDetector);
-        MoveState = new MoveState(StateMachine, this, _input, _movement);
+        MoveState = new MoveState(StateMachine, this, _input, _movement, _firearms);
         StateMachine.ChangeState(IdleState);
-    }
-
-    public void LookAt(Transform target)
-    {
-        var direction = target.position - transform.position;
-        transform.LookAt(direction);
     }
 }

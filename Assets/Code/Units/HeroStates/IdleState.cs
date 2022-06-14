@@ -1,6 +1,3 @@
-using System;
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class IdleState : BaseState
@@ -10,12 +7,13 @@ public class IdleState : BaseState
     private IFirearms _firearms;
     private IInputService _input;
     private IEnemyDetector _enemyDetector;
-    
-    public IdleState(StateMachine stateMachine, 
-        Hero hero, 
-        IInputService input, 
-        ICharacterMovement movement, 
-        IFirearms firearms, 
+    private Enemy _enemy;
+
+    public IdleState(StateMachine stateMachine,
+        Hero hero,
+        IInputService input,
+        ICharacterMovement movement,
+        IFirearms firearms,
         IEnemyDetector enemyDetector)
     {
         _hero = hero;
@@ -28,13 +26,13 @@ public class IdleState : BaseState
     public override void Enter()
     {
         base.Enter();
-
-        var enemy = TryToFindEnemyAfterDelay(0.05f);
         
-        if (enemy.Result != null)
+        _enemy = TryToFindEnemy();
+        
+        if (_enemy != null)
         {
-            var target = enemy.Result.GetComponent<ITargetable>();
-            _hero.LookAt(target.GetTransform());
+            var target = _enemy.GetComponent<ITargetable>();
+            _hero.Body.LookAt(_enemy.transform);
             _firearms.StartShooting(target);
         }
     }
@@ -52,12 +50,6 @@ public class IdleState : BaseState
         _firearms.StopShooting();
     }
 
-    private Enemy TryToFindEnemy() => 
+    private Enemy TryToFindEnemy() =>
         _enemyDetector.GetClosestEnemy(_hero.transform);
-
-    private async Task<Enemy> TryToFindEnemyAfterDelay(float seconds)
-    {
-        await UniTask.Delay(TimeSpan.FromSeconds(seconds));
-        return TryToFindEnemy();
-    }
 }
