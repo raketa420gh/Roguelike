@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(CharacterMovement))]
-[RequireComponent(typeof(EnemyDetector))]
 
 public class Hero : Character
 {
@@ -20,26 +18,23 @@ public class Hero : Character
     public Transform Body => _body;
 
     [Inject]
-    public void Construct(IInputService input) => 
+    public void Construct(IInputService input, IEnemyDetector enemyDetector)
+    {
         _input = input;
+        _enemyDetector = enemyDetector;
+    }
 
     private void Awake()
     {
         _movement = GetComponent<ICharacterMovement>();
         _firearms = GetComponentInChildren<IFirearms>();
-        _enemyDetector = GetComponent<IEnemyDetector>();
     }
 
-    private void Start()
-    {
-        InitializeStateMachine();
-    }
+    private void Start() => InitializeStateMachine();
 
-    private void Update() => 
-        StateMachine.CurrentState.Update();
+    private void Update() => StateMachine.CurrentState.Update();
 
-    private void FixedUpdate() => 
-        StateMachine.CurrentState.FixedUpdate();
+    private void FixedUpdate() => StateMachine.CurrentState.FixedUpdate();
 
     private void InitializeStateMachine()
     {

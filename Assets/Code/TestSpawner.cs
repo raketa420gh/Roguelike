@@ -13,9 +13,6 @@ public class TestSpawner : MonoBehaviour
 
     private void Start()
     {
-        var startEnemyPosition = new Vector3(0, 1, 5);
-        _factory.CreateEnemy(startEnemyPosition);
-        
         var startEnemyPosition2 = new Vector3(-3, 1, 5);
         _factory.CreateEnemy(startEnemyPosition2);
         
@@ -39,4 +36,13 @@ public class TestSpawner : MonoBehaviour
         await Task.Delay(TimeSpan.FromSeconds(seconds));
         _factory.CreateHero(position);
     }
+}
+
+public class EnemyCounter
+{
+    private IEnemyDetector _enemyDetector;
+
+    [Inject]
+    public void Construct(IEnemyDetector enemyDetector) => 
+        _enemyDetector = enemyDetector;
 }

@@ -1651,6 +1651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1459075507}
   - component: {fileID: 1459075506}
+  - component: {fileID: 1459075508}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -1671,7 +1672,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 1459075508}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1686,7 +1688,7 @@ MonoBehaviour:
   OnPostResolve:
     m_PersistentCalls:
       m_Calls: []
-  _parentNewObjectsUnderSceneContext: 0
+  _parentNewObjectsUnderSceneContext: 1
   _contractNames: []
   _parentContractNames: []
 --- !u!4 &1459075507
@@ -1700,10 +1702,24 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4653650439895534690}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1459075508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459075505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64ee25f4f3f4457942147e346c5a302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyDetector: {fileID: 6084942031224609765}
 --- !u!1 &1597015731
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,3 +3045,61 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!135 &300805651945522634
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4164047504750635580}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1000
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &4164047504750635580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4653650439895534690}
+  - component: {fileID: 300805651945522634}
+  - component: {fileID: 6084942031224609765}
+  m_Layer: 0
+  m_Name: EnemyDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4653650439895534690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4164047504750635580}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1459075507}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6084942031224609765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4164047504750635580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b236a7d9225e4e92804e7df9af4de032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

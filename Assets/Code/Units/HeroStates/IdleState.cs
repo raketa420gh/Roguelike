@@ -27,15 +27,7 @@ public class IdleState : BaseState
     public override void Enter()
     {
         base.Enter();
-        
-        _enemy = _enemyDetector.GetClosestEnemy(_hero.transform);
-        
-        if (_enemy != null)
-        {
-            var target = _enemy.GetComponent<ITargetable>();
-            _hero.Body.LookAt(_enemy.transform);
-            _firearms.StartShooting(target);
-        }
+        TryToDetectEnemy();
     }
 
     public override void Update()
@@ -43,5 +35,27 @@ public class IdleState : BaseState
         base.Update();
         if (_input.Axis != Vector2.zero)
             _hero.StateMachine.ChangeState(_hero.MoveState);
+    }
+
+    private void TryToDetectEnemy()
+    {
+        _enemy = _enemyDetector.GetClosestEnemy(_hero.transform);
+
+        if (_enemy != null)
+        {
+            _enemy.OnDead += OnEnemyDead;
+            var target = _enemy.GetComponent<ITargetable>();
+            _hero.Body.LookAt(_enemy.transform);
+            _firearms.StartShooting(target);
+        }
+    }
+
+    private void OnEnemyDead(Enemy enemy)
+    {
+        if (enemy == _enemy)
+        {
+            _firearms.StopShooting();
+            TryToDetectEnemy();
+        }
     }
 }
