@@ -14,7 +14,6 @@ public class Health : MonoBehaviour
     {
         _max = maxHealth;
         Restore();
-        Debug.Log($"Current health of {name} = {Current}");
     }
 
     public void ChangeHealth(int amount)

@@ -10,6 +10,8 @@ public class IdleState : BaseState
     private Enemy _enemy;
     private Coroutine _shootingRoutine;
 
+    private float _shootingSpeed;
+
     public IdleState(StateMachine stateMachine,
         Hero hero,
         IInputService input,
@@ -33,8 +35,15 @@ public class IdleState : BaseState
     public override void Update()
     {
         base.Update();
+        
         if (_input.Axis != Vector2.zero)
             _hero.StateMachine.ChangeState(_hero.MoveState);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        _firearms.StopShooting();
     }
 
     private void TryToDetectEnemy()

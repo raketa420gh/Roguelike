@@ -7,12 +7,22 @@ public class TestSpawner : MonoBehaviour
 {
     [SerializeField] private Door _door;
     private IFactory _factory;
+    private IEnemyCounter _enemyCounter;
     
     [Inject]
-    public void Construct(IFactory factory) => _factory = factory;
+    private void Construct(IFactory factory, IEnemyCounter enemyCounter)
+    {
+        _factory = factory;
+        _enemyCounter = enemyCounter;
+    }
 
     private void Start()
     {
+        _enemyCounter.OnAllEnemiesDead += OnAllEnemiesDead;
+        
+        var startEnemyPosition1 = new Vector3(0, 1, 5);
+        _factory.CreateEnemy(startEnemyPosition1);
+
         var startEnemyPosition2 = new Vector3(-3, 1, 5);
         _factory.CreateEnemy(startEnemyPosition2);
         
@@ -23,12 +33,9 @@ public class TestSpawner : MonoBehaviour
         CreateHeroWithDelayAsync(0.1f, startCharacterPosition);
     }
 
-    private void Update()
+    private void OnAllEnemiesDead()
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            _door.Open();
-        }
+        _door.Open();
     }
 
     private async Task CreateHeroWithDelayAsync(float seconds, Vector3 position)
@@ -36,13 +43,4 @@ public class TestSpawner : MonoBehaviour
         await Task.Delay(TimeSpan.FromSeconds(seconds));
         _factory.CreateHero(position);
     }
-}
-
-public class EnemyCounter
-{
-    private IEnemyDetector _enemyDetector;
-
-    [Inject]
-    public void Construct(IEnemyDetector enemyDetector) => 
-        _enemyDetector = enemyDetector;
 }

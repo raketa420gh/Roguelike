@@ -27,7 +27,6 @@ public class Shell : MonoBehaviour, IProjectile
         if (health)
         {
             health.ChangeHealth(-_damage);
-            Debug.Log($"Health = {health.Current}");
             Destroy(gameObject);
         }
     }

@@ -40,7 +40,7 @@ public class Hero : Character
     {
         StateMachine = new StateMachine();
         IdleState = new IdleState(StateMachine, this, _input, _movement, _firearms, _enemyDetector);
-        MoveState = new MoveState(StateMachine, this, _input, _movement, _firearms);
+        MoveState = new MoveState(StateMachine, this, _input, _movement);
         StateMachine.ChangeState(IdleState);
     }
 }

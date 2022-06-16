@@ -7,7 +7,7 @@ using Zenject;
 public class Firearms : MonoBehaviour, IFirearms
 {
     [SerializeField] private Transform _muzzleTransform;
-    private float _shootingSpeed = 1f;
+    private float _shootingSpeed = 0.5f;
     private bool _isShooting;
     private IFactory _factory;
 
