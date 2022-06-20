@@ -16,15 +16,17 @@ public class Enemy : Character
     private void Awake() =>
         _health = GetComponent<Health>();
 
-    private void Start() => 
-        _health.Setup(10);
-
-    private void OnHealthOver() => 
-        Die();
+    public void Setup(EnemyData enemyData)
+    {
+        _health.Setup(enemyData.MaxHealthPoints);
+    }
 
     private void Die()
     {
         OnDead?.Invoke(this);
         Destroy(gameObject);
     }
+
+    private void OnHealthOver() => 
+        Die();
 }

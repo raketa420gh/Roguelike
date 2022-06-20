@@ -51,12 +51,15 @@ public class IdleState : BaseState
         _enemy = _enemyDetector.GetClosestEnemy(_hero.transform);
 
         if (_enemy != null)
-        {
-            _enemy.OnDead += OnEnemyDead;
-            var target = _enemy.GetComponent<ITargetable>();
-            _hero.Body.LookAt(_enemy.transform);
-            _firearms.StartShooting(target);
-        }
+            AttackEnemy();
+    }
+
+    private void AttackEnemy()
+    {
+        _enemy.OnDead += OnEnemyDead;
+        var target = _enemy.GetComponent<ITargetable>();
+        _hero.Body.LookAt(_enemy.transform);
+        _firearms.StartShooting(target);
     }
 
     private void OnEnemyDead(Enemy enemy)

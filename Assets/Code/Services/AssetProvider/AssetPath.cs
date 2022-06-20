@@ -7,4 +7,5 @@ public class AssetPath
     public const string Hero = "Prefabs/Hero";
     public const string Enemy = "Prefabs/Enemy";
     public const string Shell = "Prefabs/Shell";
+    public const string StageBase = "Prefabs/StageBase";
 }
