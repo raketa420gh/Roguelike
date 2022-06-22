@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class TestSpawner : MonoBehaviour
 {
@@ -25,15 +26,13 @@ public class TestSpawner : MonoBehaviour
         _currentStage  = _factory.CreateStageBase(Vector3.zero);
         _currentStage.Door.OnHeroTriggerEnter += OnHeroEnterDoor;
         
-        _unitsCounter.OnAllEnemiesDead += OnAllUnitsesDead;
+        _unitsCounter.OnAllEnemiesDead += OnAllUnitsDead;
 
-        var startEnemyPosition2 = new Vector3(-3, 1, 5);
-        _factory.CreateEnemy(startEnemyPosition2)
-            .Setup(_enemyData);
-
-        var startEnemyPosition3 = new Vector3(3, 1, 5);
-        _factory.CreateEnemy(startEnemyPosition3)
-            .Setup(_enemyData);
+        var randomPositionIndex = Random.Range(0, _currentStage.SpawnPoints.Length);
+        var randomPosition = _currentStage.SpawnPoints[randomPositionIndex].transform.position;
+        
+        var enemy1 = _unitsSpawner.SpawnEnemy(randomPosition, _enemyData);
+        enemy1.Setup(_enemyData);
         
         var startCharacterPosition = new Vector3(0, 1, -9);
         CreateHeroWithDelayAsync(0.1f, startCharacterPosition);
@@ -51,9 +50,16 @@ public class TestSpawner : MonoBehaviour
         sequence.Append(Camera.main.transform.DOMove(new Vector3(0, 15, 11), 1f));
     }
 
-    private void OnAllUnitsesDead()
+    private void OnAllUnitsDead()
     {
         _currentStage.Door.Open();
         _currentStage = _factory.CreateStageBase(new Vector3(0, 0, 18));
+        _currentStage.Door.OnHeroTriggerEnter += OnHeroEnterDoor;
+        
+        var randomPositionIndex = Random.Range(0, _currentStage.SpawnPoints.Length);
+        var randomPosition = _currentStage.SpawnPoints[randomPositionIndex].transform.position;
+        
+        var enemy1 = _unitsSpawner.SpawnEnemy(randomPosition, _enemyData);
+        enemy1.Setup(_enemyData);
     }
 }
