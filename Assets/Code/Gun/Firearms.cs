@@ -1,6 +1,6 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -15,19 +15,20 @@ public class Firearms : MonoBehaviour, IFirearms
     public void Construct(IFactory factory) => 
         _factory = factory;
 
-    public async Task StartShooting(ITargetable target)
+    public async Task StartShooting(ITargetable target, CancellationToken cancellationToken)
     {
         _isShooting = true;
 
         while (_isShooting)
         {
             Shoot(target);
-            await UniTask.Delay(TimeSpan.FromSeconds(_shootingSpeed));
+            await Task.Delay(TimeSpan.FromSeconds(_shootingSpeed), cancellationToken);
         }
     }
 
-    public void StopShooting()
+    public void StopShooting(CancellationTokenSource cancellationTokenSource)
     {
+        cancellationTokenSource.Cancel();
         _isShooting = false;
     }
 

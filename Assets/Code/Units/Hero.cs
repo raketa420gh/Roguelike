@@ -13,15 +13,15 @@ public class Hero : Character
     private ICharacterMovement _movement;
     private IFirearms _firearms;
     private IInputService _input;
-    private IEnemyDetector _enemyDetector;
+    private IUnitsDetector _unitsDetector;
     
     public Transform Body => _body;
 
     [Inject]
-    public void Construct(IInputService input, IEnemyDetector enemyDetector)
+    public void Construct(IInputService input, IUnitsDetector unitsDetector)
     {
         _input = input;
-        _enemyDetector = enemyDetector;
+        _unitsDetector = unitsDetector;
     }
 
     private void Awake()
@@ -39,7 +39,7 @@ public class Hero : Character
     private void InitializeStateMachine()
     {
         StateMachine = new StateMachine();
-        IdleState = new IdleState(StateMachine, this, _input, _movement, _firearms, _enemyDetector);
+        IdleState = new IdleState(StateMachine, this, _input, _movement, _firearms, _unitsDetector);
         MoveState = new MoveState(StateMachine, this, _input, _movement);
         StateMachine.ChangeState(IdleState);
     }

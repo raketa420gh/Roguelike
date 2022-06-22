@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IEnemySpawner
+public interface IUnitsSpawner
 {
     Enemy SpawnEnemy(Vector3 position, EnemyData enemyData);
 }

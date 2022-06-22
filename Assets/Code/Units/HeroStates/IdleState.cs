@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 
 public class IdleState : BaseState
@@ -6,24 +7,23 @@ public class IdleState : BaseState
     private ICharacterMovement _movement;
     private IFirearms _firearms;
     private IInputService _input;
-    private IEnemyDetector _enemyDetector;
+    private IUnitsDetector _unitsDetector;
     private Enemy _enemy;
     private Coroutine _shootingRoutine;
-
     private float _shootingSpeed;
-
+    private CancellationTokenSource _tokenSource;
     public IdleState(StateMachine stateMachine,
         Hero hero,
         IInputService input,
         ICharacterMovement movement,
         IFirearms firearms,
-        IEnemyDetector enemyDetector)
+        IUnitsDetector unitsDetector)
     {
         _hero = hero;
         _input = input;
         _movement = movement;
         _firearms = firearms;
-        _enemyDetector = enemyDetector;
+        _unitsDetector = unitsDetector;
     }
 
     public override void Enter()
@@ -43,12 +43,12 @@ public class IdleState : BaseState
     public override void Exit()
     {
         base.Exit();
-        _firearms.StopShooting();
+        _firearms.StopShooting(_tokenSource);
     }
 
     private void TryToDetectEnemy()
     {
-        _enemy = _enemyDetector.GetClosestEnemy(_hero.transform);
+        _enemy = _unitsDetector.GetClosestEnemy(_hero.transform);
 
         if (_enemy != null)
             AttackEnemy();
@@ -59,14 +59,16 @@ public class IdleState : BaseState
         _enemy.OnDead += OnEnemyDead;
         var target = _enemy.GetComponent<ITargetable>();
         _hero.Body.LookAt(_enemy.transform);
-        _firearms.StartShooting(target);
+        _tokenSource = new CancellationTokenSource();
+        _firearms.StartShooting(target, _tokenSource.Token);
     }
 
     private void OnEnemyDead(Enemy enemy)
     {
         if (enemy == _enemy)
         {
-            _firearms.StopShooting();
+            _tokenSource.Cancel();
+            _firearms.StopShooting(_tokenSource);
             TryToDetectEnemy();
         }
     }

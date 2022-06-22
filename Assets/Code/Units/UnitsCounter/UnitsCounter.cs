@@ -2,22 +2,22 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class EnemyCounter : MonoBehaviour, IEnemyCounter
+public class UnitsCounter : MonoBehaviour, IUnitsCounter
 {
     public event Action OnAllEnemiesDead;
     
-    private IEnemyDetector _enemyDetector;
+    private IUnitsDetector _unitsDetector;
     private int _enemyCount = 0;
 
     [Inject]
-    public void Construct(IEnemyDetector enemyDetector) =>
-        _enemyDetector = enemyDetector;
+    public void Construct(IUnitsDetector unitsDetector) =>
+        _unitsDetector = unitsDetector;
 
-    private void OnEnable() => _enemyDetector.OnEnemyDetected += OnEnemyDetected;
+    private void OnEnable() => _unitsDetector.OnEnemyDetected += OnUnitsDetected;
 
-    private void OnDisable() => _enemyDetector.OnEnemyDetected -= OnEnemyDetected;
+    private void OnDisable() => _unitsDetector.OnEnemyDetected -= OnUnitsDetected;
 
-    private void OnEnemyDetected(Enemy enemy)
+    private void OnUnitsDetected(Enemy enemy)
     {
         _enemyCount++;
         

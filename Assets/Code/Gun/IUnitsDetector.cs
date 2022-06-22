@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public interface IEnemyDetector
+public interface IUnitsDetector
 {
     event Action<Enemy> OnEnemyDetected;
     event Action<Enemy> OnEnemyUnobserved;

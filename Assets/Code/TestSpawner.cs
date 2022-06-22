@@ -6,17 +6,18 @@ using Zenject;
 
 public class TestSpawner : MonoBehaviour
 {
-    [SerializeField] private Door _door;
+    [SerializeField] private EnemyData _enemyData;
     private IFactory _factory;
-    private IEnemyCounter _enemyCounter;
-    private Camera _camera = Camera.main;
+    private IUnitsSpawner _unitsSpawner;
+    private IUnitsCounter _unitsCounter;
     private Stage _currentStage;
     
     [Inject]
-    private void Construct(IFactory factory, IEnemyCounter enemyCounter)
+    private void Construct(IFactory factory, IUnitsSpawner unitsSpawner, IUnitsCounter unitsCounter)
     {
         _factory = factory;
-        _enemyCounter = enemyCounter;
+        _unitsSpawner = unitsSpawner;
+        _unitsCounter = unitsCounter;
     }
 
     private void Start()
@@ -24,13 +25,15 @@ public class TestSpawner : MonoBehaviour
         _currentStage  = _factory.CreateStageBase(Vector3.zero);
         _currentStage.Door.OnHeroTriggerEnter += OnHeroEnterDoor;
         
-        _enemyCounter.OnAllEnemiesDead += OnAllEnemiesDead;
+        _unitsCounter.OnAllEnemiesDead += OnAllUnitsesDead;
 
         var startEnemyPosition2 = new Vector3(-3, 1, 5);
-        _factory.CreateEnemy(startEnemyPosition2);
-        
+        _factory.CreateEnemy(startEnemyPosition2)
+            .Setup(_enemyData);
+
         var startEnemyPosition3 = new Vector3(3, 1, 5);
-        _factory.CreateEnemy(startEnemyPosition3);
+        _factory.CreateEnemy(startEnemyPosition3)
+            .Setup(_enemyData);
         
         var startCharacterPosition = new Vector3(0, 1, -9);
         CreateHeroWithDelayAsync(0.1f, startCharacterPosition);
@@ -48,7 +51,7 @@ public class TestSpawner : MonoBehaviour
         sequence.Append(Camera.main.transform.DOMove(new Vector3(0, 15, 11), 1f));
     }
 
-    private void OnAllEnemiesDead()
+    private void OnAllUnitsesDead()
     {
         _currentStage.Door.Open();
         _currentStage = _factory.CreateStageBase(new Vector3(0, 0, 18));

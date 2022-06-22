@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 586e6716832948be88c65cb2727e4765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _door: {fileID: 0}
+  _enemyData: {fileID: 11400000, guid: f8e9f5915047c814da14290daa76ebe3, type: 2}
 --- !u!4 &356372066
 Transform:
   m_ObjectHideFlags: 0
@@ -673,6 +673,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1459075507}
   - component: {fileID: 1459075506}
+  - component: {fileID: 1459075510}
   - component: {fileID: 1459075508}
   - component: {fileID: 1459075509}
   m_Layer: 0
@@ -696,6 +697,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
+  - {fileID: 1459075510}
   - {fileID: 1459075508}
   - {fileID: 1459075509}
   _installerPrefabs: []
@@ -729,6 +731,7 @@ Transform:
   m_Children:
   - {fileID: 4653650439895534690}
   - {fileID: 1792777760}
+  - {fileID: 1995110935}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -744,7 +747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b64ee25f4f3f4457942147e346c5a302, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyDetector: {fileID: 6084942031224609765}
+  unitsDetector: {fileID: 6084942031224609765}
 --- !u!114 &1459075509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,7 +760,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb4effa139840d3b5652a95fd2b437c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyCounter: {fileID: 1792777759}
+  unitsCounter: {fileID: 1792777759}
+--- !u!114 &1459075510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459075505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cbb8f4d520441018a6515c87c392e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnitsSpawner: {fileID: 1995110934}
 --- !u!1 &1597015731
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,7 +1002,7 @@ GameObject:
   - component: {fileID: 1792777760}
   - component: {fileID: 1792777759}
   m_Layer: 0
-  m_Name: EnemyCounter
+  m_Name: UnitsCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1019,6 +1035,50 @@ Transform:
   m_Father: {fileID: 1459075507}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1995110933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1995110935}
+  - component: {fileID: 1995110934}
+  m_Layer: 0
+  m_Name: UnitsSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1995110934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995110933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4cb7ab70074a04b6e60f51334a2779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1995110935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995110933}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1459075507}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &300805651945522634
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1044,7 +1104,7 @@ GameObject:
   - component: {fileID: 300805651945522634}
   - component: {fileID: 6084942031224609765}
   m_Layer: 0
-  m_Name: EnemyDetector
+  m_Name: UnitsDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

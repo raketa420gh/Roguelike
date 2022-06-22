@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class EnemySpawner : IEnemySpawner
+public class UnitsSpawner : MonoBehaviour, IUnitsSpawner
 {
     private IFactory _factory;
 

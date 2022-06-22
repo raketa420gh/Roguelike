@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
 
-public class EnemyDetector : MonoBehaviour, IEnemyDetector
+public class UnitsDetector : MonoBehaviour, IUnitsDetector
 {
     public event Action<Enemy> OnEnemyDetected;
     public event Action<Enemy> OnEnemyUnobserved;

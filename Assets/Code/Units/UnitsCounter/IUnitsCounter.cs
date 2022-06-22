@@ -1,6 +1,6 @@
 using System;
 
-public interface IEnemyCounter
+public interface IUnitsCounter
 {
     event Action OnAllEnemiesDead;
 }
