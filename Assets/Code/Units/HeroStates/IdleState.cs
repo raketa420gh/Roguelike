@@ -43,14 +43,15 @@ public class IdleState : BaseState
     public override void Exit()
     {
         base.Exit();
-        _firearms.StopShooting(_tokenSource);
+        if (_tokenSource != null)
+            _firearms.StopShooting(_tokenSource);
     }
 
     private void TryToDetectEnemy()
     {
         _enemy = _unitsDetector.GetClosestEnemy(_hero.transform);
 
-        if (_enemy != null)
+        if (_enemy != null && _hero.InAreaOfCurrentStage)
             AttackEnemy();
     }
 
@@ -67,7 +68,6 @@ public class IdleState : BaseState
     {
         if (enemy == _enemy)
         {
-            _tokenSource.Cancel();
             _firearms.StopShooting(_tokenSource);
             TryToDetectEnemy();
         }

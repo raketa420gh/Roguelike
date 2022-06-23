@@ -14,14 +14,17 @@ public class Hero : Character
     private IFirearms _firearms;
     private IInputService _input;
     private IUnitsDetector _unitsDetector;
-    
+    private ILevelLoop _levelLoop;
+
     public Transform Body => _body;
+    public bool InAreaOfCurrentStage => _levelLoop.CurrentStage.InArea;
 
     [Inject]
-    public void Construct(IInputService input, IUnitsDetector unitsDetector)
+    public void Construct(IInputService input, IUnitsDetector unitsDetector, ILevelLoop levelLoop)
     {
         _input = input;
         _unitsDetector = unitsDetector;
+        _levelLoop = levelLoop;
     }
 
     private void Awake()
