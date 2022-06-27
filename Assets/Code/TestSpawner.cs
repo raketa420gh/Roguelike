@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
@@ -39,31 +37,35 @@ public class TestSpawner : MonoBehaviour
         enemy1.Setup(_enemyData);
         
         var startCharacterPosition = new Vector3(0, 1, -9);
-        CreateHeroWithDelayAsync(0.1f, startCharacterPosition);
+        _factory.CreateHero(startCharacterPosition);
     }
 
-    private async Task CreateHeroWithDelayAsync(float seconds, Vector3 position)
+    private void CreateNewStage()
     {
-        await Task.Delay(TimeSpan.FromSeconds(seconds));
-        _factory.CreateHero(position);
+        var nextStagePosition = _levelLoop.CurrentStage.transform.position + new Vector3(0, 0, 18);
+        _levelLoop.SetCurrentStage(_factory.CreateStageBase(nextStagePosition));
+        _levelLoop.CurrentStage.Door.OnHeroTriggerEnter += OnHeroEnterDoor;
+    }
+
+    private void CreateEnemiesAtStage()
+    {
+        var randomIndex = Random.Range(0, _levelLoop.CurrentStage.SpawnPoints.Length);
+        var enemyRandomPosition = _levelLoop.CurrentStage.SpawnPoints[randomIndex].transform.position;
+
+        var enemy1 = _unitsSpawner.SpawnEnemy(enemyRandomPosition, _enemyData);
+        enemy1.Setup(_enemyData);
     }
 
     private void OnHeroEnterDoor()
     {
         var sequence = DOTween.Sequence();
-        sequence.Append(Camera.main.transform.DOMove(new Vector3(0, 15, 11), 1f));
+        sequence.Append(Camera.main.transform.DOMove(_levelLoop.CurrentStage.CameraPosition, 1f));
     }
 
     private void OnAllUnitsDead()
     {
         _levelLoop.CurrentStage.CompleteStage();
-        _levelLoop.SetCurrentStage(_factory.CreateStageBase(new Vector3(0, 0, 18)));
-        _levelLoop.CurrentStage.Door.OnHeroTriggerEnter += OnHeroEnterDoor;
-        
-        var randomPositionIndex = Random.Range(0, _levelLoop.CurrentStage.SpawnPoints.Length);
-        var randomPosition = _levelLoop.CurrentStage.SpawnPoints[randomPositionIndex].transform.position;
-        
-        var enemy1 = _unitsSpawner.SpawnEnemy(randomPosition, _enemyData);
-        enemy1.Setup(_enemyData);
+        CreateNewStage();
+        CreateEnemiesAtStage();
     }
 }

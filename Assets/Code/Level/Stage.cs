@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour, IStage
 {
-    [SerializeField] private GameObject _spawnPointsParentObject;
+    [SerializeField] private Transform _spawnPointsParentObject;
+    [SerializeField] private Transform _cameraPointTranform;
     private SpawnPoint[] _spawnPoints;
     private IDoor _door;
 
     public bool InArea { get; private set; }
     public IDoor Door => _door;
     public SpawnPoint[] SpawnPoints => _spawnPoints;
+    public Vector3 CameraPosition => _cameraPointTranform.position;
 
     private void Awake()
     {
