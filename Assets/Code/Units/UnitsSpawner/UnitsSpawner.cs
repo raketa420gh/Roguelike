@@ -14,4 +14,15 @@ public class UnitsSpawner : MonoBehaviour, IUnitsSpawner
         enemy.Setup(enemyData);
         return enemy;
     }
+
+    public Enemy SpawnEnemyAtRandomFreeSpawnPoint(SpawnPoint[] spawnPoints, EnemyData enemyData)
+    {
+        var randomPositionIndex = Random.Range(0, spawnPoints.Length);
+        var randomPosition = spawnPoints[randomPositionIndex].GetPosition;
+        spawnPoints[randomPositionIndex].IsOccupied = true;
+        
+        var enemy = SpawnEnemy(randomPosition, enemyData);
+
+        return enemy;
+    }
 }

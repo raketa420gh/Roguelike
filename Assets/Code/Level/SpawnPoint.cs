@@ -1,18 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool IsOccupied { get; set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Vector3 GetPosition => transform.position;
 }

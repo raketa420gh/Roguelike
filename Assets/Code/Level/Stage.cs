@@ -1,23 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 
 public class Stage : MonoBehaviour, IStage
 {
-    [SerializeField] private Transform _spawnPointsParentObject;
     [SerializeField] private Transform _cameraPointTranform;
-    private SpawnPoint[] _spawnPoints;
+    [SerializeField] List<SpawnPoint> _spawnPoints = new List<SpawnPoint>();
     private IDoor _door;
 
+    public List<SpawnPoint> FreeSpawnPoints => _spawnPoints;
     public bool InArea { get; private set; }
     public IDoor Door => _door;
-    public SpawnPoint[] SpawnPoints => _spawnPoints;
     public Vector3 CameraPosition => _cameraPointTranform.position;
 
     private void Awake()
     {
         _door = GetComponentInChildren<IDoor>();
-        _spawnPoints = _spawnPointsParentObject.GetComponentsInChildren<SpawnPoint>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,6 +34,8 @@ public class Stage : MonoBehaviour, IStage
         if (hero)
             InArea = false;
     }
+
+    public void OccupeSpawnPoint(int index) => _spawnPoints.Remove(_spawnPoints[index]);
 
     public void LoadStage() => _door.Close();
 

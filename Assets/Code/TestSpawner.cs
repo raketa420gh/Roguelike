@@ -30,11 +30,7 @@ public class TestSpawner : MonoBehaviour
         
         _unitsCounter.OnAllEnemiesDead += OnAllUnitsDead;
 
-        var randomPositionIndex = Random.Range(0, _levelLoop.CurrentStage.SpawnPoints.Length);
-        var randomPosition = _levelLoop.CurrentStage.SpawnPoints[randomPositionIndex].transform.position;
-        
-        var enemy1 = _unitsSpawner.SpawnEnemy(randomPosition, _enemyData);
-        enemy1.Setup(_enemyData);
+        CreateEnemiesAtStage(3);
         
         var startCharacterPosition = new Vector3(0, 1, -9);
         _factory.CreateHero(startCharacterPosition);
@@ -47,13 +43,16 @@ public class TestSpawner : MonoBehaviour
         _levelLoop.CurrentStage.Door.OnHeroTriggerEnter += OnHeroEnterDoor;
     }
 
-    private void CreateEnemiesAtStage()
+    private void CreateEnemiesAtStage(int enemiesCount)
     {
-        var randomIndex = Random.Range(0, _levelLoop.CurrentStage.SpawnPoints.Length);
-        var enemyRandomPosition = _levelLoop.CurrentStage.SpawnPoints[randomIndex].transform.position;
+        for (int i = 0; i < enemiesCount; i++)
+        {
+            var randomIndex = Random.Range(0, _levelLoop.CurrentStage.FreeSpawnPoints.Count);
+            var enemyRandomPosition = _levelLoop.CurrentStage.FreeSpawnPoints[randomIndex].GetPosition;
+            _levelLoop.CurrentStage.OccupeSpawnPoint(randomIndex);
 
-        var enemy1 = _unitsSpawner.SpawnEnemy(enemyRandomPosition, _enemyData);
-        enemy1.Setup(_enemyData);
+            var enemy = _unitsSpawner.SpawnEnemy(enemyRandomPosition, _enemyData);
+        }
     }
 
     private void OnHeroEnterDoor()
@@ -66,6 +65,6 @@ public class TestSpawner : MonoBehaviour
     {
         _levelLoop.CurrentStage.CompleteStage();
         CreateNewStage();
-        CreateEnemiesAtStage();
+        CreateEnemiesAtStage(5);
     }
 }
