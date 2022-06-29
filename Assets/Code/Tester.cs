@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class TestSpawner : MonoBehaviour
+public class Tester : MonoBehaviour
 {
     [SerializeField] private EnemyData _enemyData;
     private IFactory _factory;
@@ -25,11 +25,8 @@ public class TestSpawner : MonoBehaviour
 
     private void Start()
     {
-        _levelLoop.SetCurrentStage(_factory.CreateStageBase(Vector3.zero));
-        _levelLoop.CurrentStage.Door.OnHeroTriggerEnter += OnHeroEnterDoor;
-        
         _unitsCounter.OnAllEnemiesDead += OnAllUnitsDead;
-
+        CreateNewStage();
         CreateEnemiesAtStage(3);
         
         var startCharacterPosition = new Vector3(0, 1, -9);
@@ -38,8 +35,14 @@ public class TestSpawner : MonoBehaviour
 
     private void CreateNewStage()
     {
-        var nextStagePosition = _levelLoop.CurrentStage.transform.position + new Vector3(0, 0, 18);
-        _levelLoop.SetCurrentStage(_factory.CreateStageBase(nextStagePosition));
+        if (_levelLoop.CurrentStage != null)
+        {
+            var nextStagePosition = _levelLoop.CurrentStage.Position + new Vector3(0, 0, 18);
+            _levelLoop.SetCurrentStage(_factory.CreateStageBase(nextStagePosition));
+        }
+        else
+            _levelLoop.SetCurrentStage(_factory.CreateStageBase(Vector3.zero));
+
         _levelLoop.CurrentStage.Door.OnHeroTriggerEnter += OnHeroEnterDoor;
     }
 
@@ -49,7 +52,7 @@ public class TestSpawner : MonoBehaviour
         {
             var randomIndex = Random.Range(0, _levelLoop.CurrentStage.FreeSpawnPoints.Count);
             var enemyRandomPosition = _levelLoop.CurrentStage.FreeSpawnPoints[randomIndex].GetPosition;
-            _levelLoop.CurrentStage.OccupeSpawnPoint(randomIndex);
+            _levelLoop.CurrentStage.OccupySpawnPoint(randomIndex);
 
             var enemy = _unitsSpawner.SpawnEnemy(enemyRandomPosition, _enemyData);
         }

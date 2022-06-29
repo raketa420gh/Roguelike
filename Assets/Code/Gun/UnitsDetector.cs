@@ -9,7 +9,7 @@ public class UnitsDetector : MonoBehaviour, IUnitsDetector
     public event Action<Enemy> OnEnemyDetected;
     public event Action<Enemy> OnEnemyUnobserved;
 
-    private readonly List<Enemy> _detectedEnemies = new();
+    private readonly List<Character> _detectedCharacters = new();
     private Enemy _closestEnemy;
 
     private void OnTriggerEnter(Collider other)
@@ -18,7 +18,7 @@ public class UnitsDetector : MonoBehaviour, IUnitsDetector
 
         if (enemy)
         {
-            _detectedEnemies.Add(enemy);
+            _detectedCharacters.Add(enemy);
             enemy.OnDead += RemoveEnemyFromDetectedList;
             Debug.Log($"On enemy detected {enemy.name}");
             OnEnemyDetected?.Invoke(enemy);
@@ -41,7 +41,7 @@ public class UnitsDetector : MonoBehaviour, IUnitsDetector
         float closestDistanceSqr = Mathf.Infinity;
         Vector3 currentPosition = transform.position;
 
-        foreach (Enemy potentialEnemy in _detectedEnemies)
+        foreach (Enemy potentialEnemy in _detectedCharacters)
         {
             Vector3 directionToTarget = potentialEnemy.transform.position - currentPosition;
             float dSqrToTarget = directionToTarget.sqrMagnitude;
@@ -56,6 +56,6 @@ public class UnitsDetector : MonoBehaviour, IUnitsDetector
         return _closestEnemy;
     }
 
-    private void RemoveEnemyFromDetectedList(Enemy enemy) =>
-        _detectedEnemies.Remove(enemy);
+    private void RemoveEnemyFromDetectedList(Character character) =>
+        _detectedCharacters.Remove(character);
 }

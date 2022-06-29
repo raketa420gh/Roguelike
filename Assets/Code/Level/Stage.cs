@@ -8,11 +8,12 @@ public class Stage : MonoBehaviour, IStage
     [SerializeField] private Transform _cameraPointTranform;
     [SerializeField] List<SpawnPoint> _spawnPoints = new List<SpawnPoint>();
     private IDoor _door;
-
+    
+    public Vector3 Position => transform.position;
+    public Vector3 CameraPosition => _cameraPointTranform.position;
+    public IDoor Door => _door;
     public List<SpawnPoint> FreeSpawnPoints => _spawnPoints;
     public bool InArea { get; private set; }
-    public IDoor Door => _door;
-    public Vector3 CameraPosition => _cameraPointTranform.position;
 
     private void Awake()
     {
@@ -35,7 +36,7 @@ public class Stage : MonoBehaviour, IStage
             InArea = false;
     }
 
-    public void OccupeSpawnPoint(int index) => _spawnPoints.Remove(_spawnPoints[index]);
+    public void OccupySpawnPoint(int index) => _spawnPoints.Remove(_spawnPoints[index]);
 
     public void LoadStage() => _door.Close();
 

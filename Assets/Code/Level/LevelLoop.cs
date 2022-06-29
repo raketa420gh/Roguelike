@@ -1,8 +1,8 @@
 public class LevelLoop : ILevelLoop
 {
-    private Stage _currentStage;
+    private IStage _currentStage;
 
-    public Stage CurrentStage => _currentStage;
+    public IStage CurrentStage => _currentStage;
 
-    public void SetCurrentStage(Stage stage) => _currentStage = stage;
+    public void SetCurrentStage(IStage stage) => _currentStage = stage;
 }

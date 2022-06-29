@@ -17,14 +17,14 @@ public class UnitsCounter : MonoBehaviour, IUnitsCounter
 
     private void OnDisable() => _unitsDetector.OnEnemyDetected -= OnUnitsDetected;
 
-    private void OnUnitsDetected(Enemy enemy)
+    private void OnUnitsDetected(Character character)
     {
         _enemyCount++;
         
-        enemy.OnDead += OnEnemyDead;
+        character.OnDead += OnEnemyDead;
     }
 
-    private void OnEnemyDead(Enemy enemy)
+    private void OnEnemyDead(Character character)
     {
         _enemyCount--;
 

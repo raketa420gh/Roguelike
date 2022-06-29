@@ -1,5 +1,5 @@
 public interface ILevelLoop
 {
-    Stage CurrentStage { get; }
-    void SetCurrentStage(Stage stage);
+    IStage CurrentStage { get; }
+    void SetCurrentStage(IStage stage);
 }

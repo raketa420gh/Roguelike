@@ -9,9 +9,9 @@ public class IdleState : BaseState
     private IInputService _input;
     private IUnitsDetector _unitsDetector;
     private Enemy _enemy;
-    private Coroutine _shootingRoutine;
     private float _shootingSpeed;
     private CancellationTokenSource _tokenSource;
+    
     public IdleState(StateMachine stateMachine,
         Hero hero,
         IInputService input,
@@ -64,9 +64,9 @@ public class IdleState : BaseState
         _firearms.StartShooting(target, _tokenSource.Token);
     }
 
-    private void OnEnemyDead(Enemy enemy)
+    private void OnEnemyDead(Character character)
     {
-        if (enemy == _enemy)
+        if (character == _enemy)
         {
             _firearms.StopShooting(_tokenSource);
             TryToDetectEnemy();
