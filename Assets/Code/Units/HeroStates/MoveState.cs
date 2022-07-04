@@ -5,16 +5,25 @@ public class MoveState : BaseState
     private Hero _hero;
     private IInputService _input;
     private ICharacterMovement _movement;
+    private ICharacterAnimation _animation;
     private float _moveSpeed = 3f;
 
     public MoveState(StateMachine stateMachine, 
         Hero hero, 
         IInputService input, 
-        ICharacterMovement movement)
+        ICharacterMovement movement,
+        ICharacterAnimation animation)
     {
         _hero = hero;
         _input = input;
         _movement = movement;
+        _animation = animation;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        _animation.PlayRunAnimation();
     }
 
     public override void Update()

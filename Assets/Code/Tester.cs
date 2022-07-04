@@ -29,7 +29,7 @@ public class Tester : MonoBehaviour
         CreateNewStage();
         CreateEnemiesAtStage(3);
         
-        var startCharacterPosition = new Vector3(0, 1, -9);
+        var startCharacterPosition = new Vector3(0, 0, -9);
         _factory.CreateHero(startCharacterPosition);
     }
 

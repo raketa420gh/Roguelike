@@ -6,6 +6,7 @@ public class Enemy : Character
 {
     public void Setup(EnemyData enemyData)
     {
-        _health.Setup(enemyData.MaxHealthPoints);
+        Setup();
+        Health.Setup(enemyData.MaxHealthPoints);
     }
 }

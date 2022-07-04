@@ -2,6 +2,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(CharacterMovement))]
+[RequireComponent(typeof(CharacterAnimation))]
 
 public class Hero : Character
 {
@@ -11,6 +12,7 @@ public class Hero : Character
 
     [SerializeField] private Transform _body;
     private ICharacterMovement _movement;
+    private ICharacterAnimation _animation;
     private IFirearms _firearms;
     private IInputService _input;
     private IUnitsDetector _unitsDetector;
@@ -30,6 +32,7 @@ public class Hero : Character
     private void Awake()
     {
         _movement = GetComponent<ICharacterMovement>();
+        _animation = GetComponent<ICharacterAnimation>();
         _firearms = GetComponentInChildren<IFirearms>();
     }
 
@@ -42,8 +45,8 @@ public class Hero : Character
     private void InitializeStateMachine()
     {
         StateMachine = new StateMachine();
-        IdleState = new IdleState(StateMachine, this, _input, _movement, _firearms, _unitsDetector);
-        MoveState = new MoveState(StateMachine, this, _input, _movement);
+        IdleState = new IdleState(StateMachine, this, _input, _movement, _animation, _firearms, _unitsDetector);
+        MoveState = new MoveState(StateMachine, this, _input, _movement, _animation);
         StateMachine.ChangeState(IdleState);
     }
 }

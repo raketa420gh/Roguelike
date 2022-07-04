@@ -21,8 +21,6 @@ public class UnitsSpawner : MonoBehaviour, IUnitsSpawner
         var randomPosition = spawnPoints[randomPositionIndex].GetPosition;
         spawnPoints[randomPositionIndex].IsOccupied = true;
         
-        var enemy = SpawnEnemy(randomPosition, enemyData);
-
-        return enemy;
+        return SpawnEnemy(randomPosition, enemyData);
     }
 }

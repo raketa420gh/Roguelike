@@ -5,6 +5,7 @@ public class IdleState : BaseState
 {
     private Hero _hero;
     private ICharacterMovement _movement;
+    private ICharacterAnimation _animation;
     private IFirearms _firearms;
     private IInputService _input;
     private IUnitsDetector _unitsDetector;
@@ -16,12 +17,14 @@ public class IdleState : BaseState
         Hero hero,
         IInputService input,
         ICharacterMovement movement,
+        ICharacterAnimation animation,
         IFirearms firearms,
         IUnitsDetector unitsDetector)
     {
         _hero = hero;
         _input = input;
         _movement = movement;
+        _animation = animation;
         _firearms = firearms;
         _unitsDetector = unitsDetector;
     }
@@ -29,6 +32,7 @@ public class IdleState : BaseState
     public override void Enter()
     {
         base.Enter();
+        _animation.PlayIdleAnimation();
         TryToDetectEnemy();
     }
 
@@ -57,6 +61,7 @@ public class IdleState : BaseState
 
     private void AttackEnemy()
     {
+        _animation.PlayAttackAnimation();
         _enemy.OnDead += OnEnemyDead;
         var target = _enemy.GetComponent<ITargetable>();
         _hero.Body.LookAt(_enemy.transform);

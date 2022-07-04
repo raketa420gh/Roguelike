@@ -21,8 +21,8 @@ public class Firearms : MonoBehaviour, IFirearms
 
         while (_isShooting)
         {
-            Shoot(target);
             await Task.Delay(TimeSpan.FromSeconds(_shootingSpeed), cancellationToken);
+            Shoot(target);
         }
     }
 

@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
     public event Action<int> OnChanged;
     public event Action<float> OnPercentChanged = delegate {  }; 
     public event Action OnOver;
+    
     private int _max = 100;
     
     public int Current { get; private set; }
