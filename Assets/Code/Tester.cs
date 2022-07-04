@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class Tester : MonoBehaviour
 {
     [SerializeField] private EnemyData _enemyData;
+    [SerializeField] private CameraController _camera;
     private IFactory _factory;
     private IUnitsSpawner _unitsSpawner;
     private IUnitsCounter _unitsCounter;
@@ -30,7 +31,10 @@ public class Tester : MonoBehaviour
         CreateEnemiesAtStage(3);
         
         var startCharacterPosition = new Vector3(0, 0, -9);
-        _factory.CreateHero(startCharacterPosition);
+        var hero = _factory.CreateHero(startCharacterPosition);
+        
+        _camera.LookAt(hero.transform);
+        _camera.Follow(hero.transform);
     }
 
     private void CreateNewStage()
