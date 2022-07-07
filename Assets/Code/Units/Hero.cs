@@ -42,6 +42,8 @@ public class Hero : Character
 
     private void FixedUpdate() => StateMachine.CurrentState.FixedUpdate();
 
+    public void Setup(float shootingSpeed) => _firearms.Setup(shootingSpeed);
+
     private void InitializeStateMachine()
     {
         StateMachine = new StateMachine();

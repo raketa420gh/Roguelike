@@ -15,6 +15,11 @@ public class Firearms : MonoBehaviour, IFirearms
     public void Construct(IFactory factory) => 
         _factory = factory;
 
+    public void Setup(float shootingSpeed)
+    {
+        _shootingSpeed = shootingSpeed;
+    }
+
     public async Task StartShooting(ITargetable target, CancellationToken cancellationToken)
     {
         _isShooting = true;

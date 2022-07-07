@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -8,17 +7,20 @@ public class Tester : MonoBehaviour
     [SerializeField] private EnemyData _enemyData;
     [SerializeField] private CameraController _camera;
     private IFactory _factory;
+    private IInveronmentalSpawner _inveronmentalSpawner;
     private IUnitsSpawner _unitsSpawner;
     private IUnitsCounter _unitsCounter;
     private ILevelLoop _levelLoop;
     
     [Inject]
     private void Construct(IFactory factory, 
+        IInveronmentalSpawner inveronmentalSpawner,
         IUnitsSpawner unitsSpawner, 
         IUnitsCounter unitsCounter, 
         ILevelLoop levelLoop)
     {
         _factory = factory;
+        _inveronmentalSpawner = inveronmentalSpawner;
         _unitsSpawner = unitsSpawner;
         _unitsCounter = unitsCounter;
         _levelLoop = levelLoop;
@@ -27,14 +29,25 @@ public class Tester : MonoBehaviour
     private void Start()
     {
         _unitsCounter.OnAllEnemiesDead += OnAllUnitsDead;
+        _inveronmentalSpawner.InitializeStagePathList();
+        
         CreateNewStage();
         CreateEnemiesAtStage(3);
-        
-        var startCharacterPosition = new Vector3(0, 0, -9);
-        var hero = _factory.CreateHero(startCharacterPosition);
-        
-        _camera.LookAt(hero.transform);
-        _camera.Follow(hero.transform);
+        var hero = CreateHero();
+        hero.Setup(0.25f);
+        SetCameraFollowTo(hero.transform);
+    }
+
+    private void SetCameraFollowTo(Transform transform)
+    {
+        _camera.LookAt(transform);
+        _camera.Follow(transform);
+    }
+
+    private Hero CreateHero()
+    {
+        var startCharacterPosition = new Vector3(0, 0.5f, -9);
+        return _factory.CreateHero(startCharacterPosition);
     }
 
     private void CreateNewStage()
@@ -42,12 +55,10 @@ public class Tester : MonoBehaviour
         if (_levelLoop.CurrentStage != null)
         {
             var nextStagePosition = _levelLoop.CurrentStage.Position + new Vector3(0, 0, 18);
-            _levelLoop.SetCurrentStage(_factory.CreateStageBase(nextStagePosition));
+            _levelLoop.SetCurrentStage(_inveronmentalSpawner.SpawnRandomStage(nextStagePosition));
         }
         else
-            _levelLoop.SetCurrentStage(_factory.CreateStageBase(Vector3.zero));
-
-        _levelLoop.CurrentStage.Door.OnHeroTriggerEnter += OnHeroEnterDoor;
+            _levelLoop.SetCurrentStage(_inveronmentalSpawner.SpawnRandomStage(Vector3.zero));
     }
 
     private void CreateEnemiesAtStage(int enemiesCount)
@@ -60,12 +71,6 @@ public class Tester : MonoBehaviour
 
             var enemy = _unitsSpawner.SpawnEnemy(enemyRandomPosition, _enemyData);
         }
-    }
-
-    private void OnHeroEnterDoor()
-    {
-        var sequence = DOTween.Sequence();
-        sequence.Append(Camera.main.transform.DOMove(_levelLoop.CurrentStage.CameraPosition, 1f));
     }
 
     private void OnAllUnitsDead()

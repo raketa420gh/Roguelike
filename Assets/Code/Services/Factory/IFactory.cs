@@ -6,5 +6,4 @@ public interface IFactory
     Enemy CreateEnemy(Vector3 position, string path = AssetPath.Enemy, Transform parent = null);
     IProjectile CreateShell(Vector3 position, string path = AssetPath.Shell, Transform parent = null);
     Stage CreateStageBase(Vector3 position, string path = AssetPath.StageBase, Transform parent = null);
-
 }

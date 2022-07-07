@@ -8,4 +8,5 @@ public class AssetPath
     public const string Enemy = "Prefabs/Enemy";
     public const string Shell = "Prefabs/Shell";
     public const string StageBase = "Prefabs/StageBase";
+    public const string StageBase2 = "Prefabs/StageBase2";
 }

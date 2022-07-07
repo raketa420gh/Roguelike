@@ -18,6 +18,9 @@ public class Stage : MonoBehaviour, IStage
     private void Awake()
     {
         _door = GetComponentInChildren<IDoor>();
+        
+        if (_spawnPoints.Count == 0)
+            _spawnPoints.AddRange(GetComponentsInChildren<SpawnPoint>());
     }
 
     private void OnTriggerEnter(Collider other)
