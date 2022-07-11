@@ -77,6 +77,6 @@ public class Tester : MonoBehaviour
     {
         _levelLoop.CurrentStage.CompleteStage();
         CreateNewStage();
-        CreateEnemiesAtStage(5);
+        CreateEnemiesAtStage(3);
     }
 }

@@ -14,6 +14,8 @@ public class InveronmentalSpawner: MonoBehaviour, IInveronmentalSpawner
     {
         _stagePathList.Add(AssetPath.StageBase);
         _stagePathList.Add(AssetPath.StageBase2);
+        _stagePathList.Add(AssetPath.StageBase3);
+        _stagePathList.Add(AssetPath.StageBase4);
     }
 
     public Stage SpawnRandomStage(Vector3 position)

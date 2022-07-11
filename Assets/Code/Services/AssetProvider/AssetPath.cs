@@ -9,4 +9,6 @@ public class AssetPath
     public const string Shell = "Prefabs/Shell";
     public const string StageBase = "Prefabs/StageBase";
     public const string StageBase2 = "Prefabs/StageBase2";
+    public const string StageBase3 = "Prefabs/StageBase3";
+    public const string StageBase4 = "Prefabs/StageBase4";
 }
